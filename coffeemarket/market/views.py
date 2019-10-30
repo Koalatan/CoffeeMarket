@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from .models import InsertRegister
@@ -9,25 +9,26 @@ from .forms import Registration
 
 
 class Register(generic.CreateView):
+    # 一覧表示
     # モデル指定
     model = InsertRegister
     # form.pyのクラスを指定
     form_class = Registration
     template_name = "create_register.html"
-    success_url = reverse_lazy('market:complete')
-    # def form_valid(self, form):
-    #     return render(request, 'complete.html', {
-    #         'message': '認証に成功しました!'
-    #     })
 
-    # def form_invalid(self, form):
-    #     return render(request, 'bad.html', {
-    #         'message': '認証に失敗しました！ \n 残念！'
-    #     })
+    # 重複していない場合
+    def form_valid(self, form):
+        form.save()
+        return redirect('market:insertResult')
+
+    # 重複している場合
+    def form_invalid(self, form):
+        print('重複')
+        return redirect('market:insertResult')
 
 
-def completeRegister(request):
-    return render(request, 'complete.html', {'message': '登録完了!'})
+def insertResult(request):
+    return render(request, 'complete.html')
 
 
 

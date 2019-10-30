@@ -4,6 +4,6 @@ from django.db import models
 
 
 class InsertRegister(models.Model):
+    userId = models.CharField(max_length=25, primary_key=True)
     name = models.CharField(max_length=50)
-    userId = models.CharField(max_length=25)
     password = models.CharField(max_length=25)
