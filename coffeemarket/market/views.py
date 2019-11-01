@@ -19,16 +19,18 @@ class Register(generic.CreateView):
     # 重複していない場合
     def form_valid(self, form):
         form.save()
-        return redirect('market:insertResult')
+        return redirect('market:insertResult',ans="good")
 
     # 重複している場合
     def form_invalid(self, form):
-        print('重複')
-        return redirect('market:insertResult')
+        return redirect('market:insertResult',ans="bad")
 
 
-def insertResult(request):
-    return render(request, 'complete.html')
+def insertResult(request, ans):
+    context = {
+        'message' : ans
+    }
+    return render(request, 'complete.html', context)
 
 
 

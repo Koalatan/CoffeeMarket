@@ -7,5 +7,5 @@ app_name = 'market'
 
 urlpatterns = [
     path('', Register.as_view(), name="create"),
-    path('user/', views.insertResult, name="insertResult"),
+    path('user/<ans>', views.insertResult, name="insertResult"),
 ]
