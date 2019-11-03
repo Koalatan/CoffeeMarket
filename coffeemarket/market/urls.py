@@ -1,3 +1,4 @@
+from django.conf.urls import handler404
 from django.urls import path
 
 from .views import Register
@@ -6,6 +7,9 @@ from . import views
 app_name = 'market'
 
 urlpatterns = [
-    path('', Register.as_view(), name="create"),
-    path('user/<ans>', views.insertResult, name="insertResult"),
+    path('register/', Register.as_view(), name='create'),
+    path('register/<ans>/', views.insertResult, name='insertResult'),
+    path('account/top/', views.Top.as_view(), name='top'),
+    path('account/login/', views.Login.as_view(), name='login'),
+    path('account/logout/', views.Logout.as_view(), name='logout'),
 ]
