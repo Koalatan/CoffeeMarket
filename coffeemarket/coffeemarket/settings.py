@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'market.apps.MarketConfig',
+    'market',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -100,7 +100,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -121,5 +120,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # ログインを行うURLを記載、ログイン後のリダイレクト先も
-LOGIN_URL = 'market:login'
-LOGIN_REDIRECT_URL = 'market:top'
+# LOGIN_URL = 'market:login'
+# LOGIN_REDIRECT_URL = 'market:top'

@@ -17,7 +17,7 @@ class Register(generic.CreateView):
     model = InsertRegister
     # form.pyのクラスを指定
     form_class = Registration
-    template_name = "market/create_register.html"
+    template_name = "create_register.html"
 
     # 重複していない場合
     def form_valid(self, form):
@@ -48,7 +48,7 @@ def insertResult(request, ans):
     context = {
         'message' : ans
     }
-    return render(request, 'market/complete.html', context)
+    return render(request, 'complete.html', context)
 
 
 
