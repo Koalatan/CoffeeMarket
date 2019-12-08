@@ -8,14 +8,16 @@
         <div class="col-md-10 col-md-offset-1 ml-3">
             <h3>お好きな商品を選択してください。</h3>
         </div>
+        {% for coffee_bean in coffee_beans %}
         <div class="card">
             <div class="card-header">
-                キリマンジャロAA
+                {{ coffee_bean.beans_name }}
             </div>
             <div class="card-body">
-                キリマンジャロでとれる最高級グレードの豆です。
+                {{ coffee_bean.beans}}
             </div>
         </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
