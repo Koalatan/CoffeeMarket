@@ -4,7 +4,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
-from .models import InsertRegister
+from .models import InsertRegister, CoffeeBeans
 from .forms import Registration, LoginForm
 
 
@@ -40,11 +40,13 @@ class Logout(LoginRequiredMixin, LogoutView):
     template_name = 'logout.html'
 
 
-class Top(generic.TemplateView):
+class Top(generic.ListView):
+    model = CoffeeBeans
+    context_object_name = 'coffeeBeans'
     template_name = 'top.html'
 
 
-def insertResult(request, ans):
+def insert_result(request, ans):
     context = {
         'message' : ans
     }
