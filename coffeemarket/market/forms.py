@@ -6,10 +6,10 @@ from .models import InsertRegister
 class Registration(ModelForm):
     class Meta:
         model = InsertRegister
-        fields = ('name', 'userId', 'password')
+        fields = ('name', 'user_id', 'password')
         labels = {
             'name': '名前',
-            'userId': 'ユーザーID',
+            'user_id': 'ユーザーID',
             'password': 'パスワード',
         }
 
