@@ -20,7 +20,8 @@ class CoffeeBeans(models.Model):
     # 登録日付 **更新日付はauto_now
     create_date = models.DateTimeField(auto_now_add=True)
     stock = models.IntegerField()
-
+    # 説明文
+    beans_description = models.CharField(max_length=500, null=True, blank=True)
 
 # PaymentStyle
 class PaymentMethod(models.Model):
