@@ -14,7 +14,6 @@ class Registration(ModelForm):
         }
 
 
-
 # 珈琲追加用form
 class InsertBeans(ModelForm):
     class Meta:
@@ -35,13 +34,3 @@ class InsertBeans(ModelForm):
         self.fields['price'].widget.attrs['class'] = 'form-control'
         self.fields['stock'].widget.attrs['class'] = 'form-control'
         self.fields['beans_description'].widget.attrs['class'] = 'form-control'
-
-
-
-# ログインフォーム
-class LoginForm(AuthenticationForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.fields['username'].widget.attrs['class'] = 'form-control'
-        self.fields['password'].widget.attrs['class'] = 'form-control'
