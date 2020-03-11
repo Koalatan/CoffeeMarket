@@ -8,16 +8,25 @@
         <div class="col-md-10 col-md-offset-1 ml-3">
             <h3>お好きな商品を選択してください。</h3>
         </div>
-        {% for coffee_bean in coffee_beans %}
-        <div class="card">
-            <div class="card-header">
-                {{ coffee_bean.beans_name }}
-            </div>
-            <div class="card-body">
-                {{ coffee_bean.beans}}
+    </div>
+    {% for coffee_bean in coffee_beans %}
+    <div class="row mt-4">
+        <div class="card mb-3 pl-0 col-md-10 offset-md-1" style="max-width: 700px">
+            <div class="row no-gutters">
+                <div class="col-md-4 my-auto">
+                    {% load static %}
+                    <img class="card-img" src="{% static 'market/bean.jpg' %}" style="width:230px; height:150px;">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ coffee_bean.beans_name }}</h5>
+                        <div class="text-danger text-center">￥{{ coffee_bean.price }}</div>
+                        <a class="btn btn-primary mt-3" href="#">詳細</a>
+                    </div>
+                </div>
             </div>
         </div>
-        {% endfor %}
     </div>
+    {% endfor %}
 </div>
 {% endblock %}
