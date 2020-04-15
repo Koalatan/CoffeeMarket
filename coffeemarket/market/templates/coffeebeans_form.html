@@ -17,8 +17,9 @@
                 {{ form.beans_name}}
             </div>
             <div class="form-group">
-                <label for="id_place">採取地</label>
-                {{ form.place}}
+                <label for="id_place_category">採取地</label>
+                <label class="float-right" for="id_place_category"><a data-toggle="modal" data-target="#placeModal" href="#">採取地の登録</a></label>
+                {{ form.place_category}}
             </div>
             <div class="form-group">
                 <label for="id_price">値段</label>
@@ -37,6 +38,30 @@
             </div>
         </div>
     </form>
+    <div class="modal fade" id="placeModal" tabindex="-1" role="dialog" aria-labelledby="placeModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="placeModalLabel">採取地の登録</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            </button>
+          </div>
+          <form action="{% url 'market:insertPlace' %}" method="post">
+          <div class="modal-body">
+                {% csrf_token %}
+              <div class="form-group">
+                <label for="insert_place" class="col-form-label">採取地の入力をしてね</label>
+                <input type="text" class="form-control" id="insert_place" name="place"></input>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+            <button type="submit" class="btn btn-primary">送信</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
 </div>
 {% endblock %}
 </html>
