@@ -1,9 +1,10 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
 from django.http import request
 from django.urls import reverse_lazy, reverse
+from django.utils.http import urlencode
 from django.views import generic, View
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
@@ -18,10 +19,14 @@ from .forms import InsertBeans, InsertPlace
 #     result = list(result)
 #     return result
 
+
 # 珈琲豆追加view
-class InsertBeansView(generic.CreateView):
+# PermissionRequiredMixin アクセス制御 permission_required <app_name> <code_name>
+class InsertBeansView(PermissionRequiredMixin, generic.CreateView):
+
     model = CoffeeBeans
     form_class = InsertBeans
+    permission_required = ('market.can_add',)
     template_name = "coffeebeans_form.html"
     success_url = reverse_lazy('market:top')
 
@@ -35,19 +40,18 @@ class InsertPlaceView(View):
         # 登録
         if insert_place.is_valid():
             insert_place.save()
-        else:
-            context = {
-                'error': 'エラー'
-            }
-        return redirect('market:insertBeans')
+
+        return redirect("market:insertBeans")
 
 
+# 珈琲豆一覧
 class Top(generic.ListView):
     model = CoffeeBeans
     context_object_name = 'coffee_beans'
     template_name = 'top.html'
 
 
+# 豆詳細
 class BeanDetail(generic.DetailView):
     model = CoffeeBeans
     context_object_name = 'coffee_bean'
