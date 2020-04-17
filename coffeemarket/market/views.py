@@ -51,6 +51,18 @@ class Top(generic.ListView):
     template_name = 'top.html'
 
 
+# (産地フィルター）珈琲豆一覧
+class PlaceFilterBeanList(generic.ListView):
+
+    model = CoffeeBeans
+    context_object_name = 'coffee_beans'
+    template_name = 'top.html'
+
+    def get_queryset(self):
+        place = self.kwargs['pk']
+        return CoffeeBeans.objects.filter(place_category = place)
+
+
 # 豆詳細
 class BeanDetail(generic.DetailView):
     model = CoffeeBeans

@@ -1,0 +1,9 @@
+<div class="col-md-1">
+    <ul>
+        {% for place in place_list %}
+        <li>
+            <a href="{% url 'market:filterBeanList' place.pk %} " >{{ place }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

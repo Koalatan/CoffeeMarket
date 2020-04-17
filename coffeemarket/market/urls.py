@@ -10,7 +10,7 @@ urlpatterns = [
     # coffee関連
     path('newbeans/', views.InsertBeansView.as_view(), name='insertBeans'),
     path('newplace/', views.InsertPlaceView.as_view(), name='insertPlace'),
-    path('top/', views.Top.as_view(), name='top'),
+    path('bean/list/', views.Top.as_view(), name='top'),
     path('bean/<int:pk>/', views.BeanDetail.as_view(), name='beanDetail'),
-
+    path('bean/list/filter/<int:pk>/', views.PlaceFilterBeanList.as_view(), name='filterBeanList')
 ]
