@@ -1,8 +1,7 @@
 
 {% extends 'base.html' %}
-{% load market_tags %}
 {% block content %}
-<h1 class="text-center my-4">コーヒーマーケット</h1>
+
 <div class="container">
     <div class="row pt-5">
         <div class="col-md-12 ">
@@ -12,14 +11,14 @@
 </div>
 <div class="container">
     <div class="row mt-4">
-        <div class="col-md-1">{% place_category_links %}</div>
+        <div class="col-md-1"></div>
         <div class="p-0 col-md-4 my-auto shadow-sm">
             {% load static %}
             <img  src="{% static 'market/bean.jpg' %}" style="width:100%; height:auto;">
         </div>
         <div class="col-md-6 mt-3 shadow-sm">
             <h5 class="ml-4">{{ coffee_bean.beans_name }}</h5>
-            <div class="ml-5 text-secondary">原産地：{{ coffee_bean.place }}</div>
+            <div class="ml-5 text-secondary">原産地：{{ coffee_bean.place_category }}</div>
             <div class="text-danger ml-5">￥{{ coffee_bean.price }}/100グラム</div>
             {% if user.is_authenticated %}
                 {% csrf_token %}

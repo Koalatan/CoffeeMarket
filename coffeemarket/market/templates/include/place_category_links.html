@@ -1,9 +1,10 @@
-<div class="col-md-1">
-    <ul>
+<div class="dropdown">
+  <button type="button" class="btn btn-outline-success  dropdown-toggle btn-lg" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    産地別一覧
+  </button>
+    <div class="dropdown-menu">
         {% for place in place_list %}
-        <li>
-            <a href="{% url 'market:filterBeanList' place.pk %} " >{{ place }}</a>
-        </li>
+            <a href="{% url 'market:filterBeanList' place.pk %} " class="dropdown-item">{{ place }}</a>
         {% endfor %}
-    </ul>
+    </div>
 </div>
