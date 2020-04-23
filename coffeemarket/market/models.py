@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 
 
 # PlaceCategory
+from django.db.models import UniqueConstraint
+
+
 class PlaceCategory(models.Model):
     # id
     place = models.CharField(max_length=25, unique=True)
@@ -27,6 +30,22 @@ class CoffeeBeans(models.Model):
     #     upload_to='market/',
     #     verbose_name='珈琲画像',
     # )
+
+
+class CartInfo(models.Model):
+    # id
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    coffee_beans = models.ForeignKey(CoffeeBeans, on_delete=models.CASCADE)
+    volume = models.IntegerField()
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'coffee_beans'], name='unique_cart')
+        ]
+
+    @classmethod
+    def check_unique_constrains(cls, user: User, coffee_beans: CoffeeBeans) -> bool:
+        return cls.objects.filter(user=user, coffee_beans=coffee_beans).exists()
 
 
 # PaymentStyle
