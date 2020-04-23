@@ -1,10 +1,10 @@
 from django.contrib.auth.forms import AuthenticationForm
-from django.forms import ModelForm, forms
-from .models import CoffeeBeans, PlaceCategory
+from django import forms
+from .models import CoffeeBeans, PlaceCategory, CartInfo
 
 
 # 珈琲追加用form
-class InsertBeans(ModelForm):
+class InsertBeans(forms.ModelForm):
     class Meta:
         model = CoffeeBeans
         fields = ('beans_name', 'place_category', 'price', 'stock', 'beans_description')
@@ -26,7 +26,7 @@ class InsertBeans(ModelForm):
 
 
 # 産地登録用form
-class InsertPlace(ModelForm):
+class InsertPlace(forms.ModelForm):
     class Meta:
         model = PlaceCategory
         fields = {'place'}
@@ -36,4 +36,32 @@ class InsertPlace(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['place'].widget.attrs['place'] = 'form-control'
+        self.fields['place'].widget.attrs['class'] = 'form-control'
+
+
+class InsertCart(forms.ModelForm):
+    class Meta:
+        model = CartInfo
+        fields = ('user', 'coffee_beans', 'volume')
+        labels = {
+            'user': 'user',
+            'coffee_beans': 'id',
+            'volume': '数量',
+        }
+        widgets = {
+            'user': forms.HiddenInput(),
+            'coffee_beans': forms.HiddenInput(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['volume'].widget.attrs['class'] = 'form-control'
+
+
+class BeanVolume(forms.Form):
+
+    volume = forms.IntegerField(
+        label='数量',
+        max_value=5,
+        min_value=1
+    )
