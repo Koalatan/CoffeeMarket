@@ -98,6 +98,19 @@ class BeanDetail(TemplateView):
         return render(request, self.template_name, context)
         # CartInfo.objects.create(user=self.request.user, coffee_beans=coffee_beans, volume=volume)
 
+
+# カート内情報閲覧
+class CartInfoList(generic.TemplateView):
+    template_name = 'cart_info.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        user = self.request.user
+        context['cart_info_list'] = CartInfo.objects.filter(user=user)
+        return context
+
+
+
 # # 豆詳細
 # class BeanDetail(generic.DetailView):
 #     model = CoffeeBeans

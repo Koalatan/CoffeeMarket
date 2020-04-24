@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load market_tags %}
+<body>
+<div class="container">
+    <div class="row pt-5">
+        <div class="col-md-10 offset-md-1">
+            <h3 class="text text-secondary">カート情報</h3>
+<!--            <div class="float-right text text-primary">{{ msg }}</div>-->
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row pt-3">
+        <div class="col-md-10 offset-md-1">
+            <table class="table">
+                <thread>
+                    <tr>
+                        <th>#</th>
+                        <th>珈琲豆</th>
+                        <th>数量</th>
+                        <th>単価（100g)</th>
+                        <th>金額</th>
+                    </tr>
+                </thread>
+                <tbody>
+                {% for cart_info in cart_info_list %}
+                    <tr>
+                        <th>{{ forloop.counter }}</th>
+                        <td>{{ cart_info.coffee_beans.beans_name }}</td>
+                        <td>{{ cart_info.volume }}</td>
+                        <td>{{ cart_info.coffee_beans.price }}円</td>
+                        <td>{{ cart_info.coffee_beans.price | sum_price:cart_info.volume }}円</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+</body>
+{% endblock %}

@@ -12,5 +12,7 @@ urlpatterns = [
     path('newplace/', views.InsertPlaceView.as_view(), name='insertPlace'),
     path('bean/list/', views.Top.as_view(), name='top'),
     path('bean/<int:pk>/', views.BeanDetail.as_view(), name='beanDetail'),
-    path('bean/list/filter/<int:pk>/', views.PlaceFilterBeanList.as_view(), name='filterBeanList')
+    path('bean/list/filter/<int:pk>/', views.PlaceFilterBeanList.as_view(), name='filterBeanList'),
+    path('user/cart/', views.CartInfoList.as_view(), name='cartInfo'),
+    # path('cart/', views.InsertCartView.as_view(), name='insertCart'),
 ]
