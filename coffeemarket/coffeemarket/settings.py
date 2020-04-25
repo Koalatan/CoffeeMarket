@@ -19,8 +19,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '&)gf34t6--m&1b)hl1ymit&$-$#&pnwyd12*f^-_my3#q3*q1-'
+try:
+    from .local_settings import *
+except ImportError:
+    pass
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -125,5 +127,5 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-LOGIN_REDIRECT_URL = '/market/top/'
+LOGIN_REDIRECT_URL = '/market/bean/list/'
 LOGIN_URL = '/accounts/login/'
