@@ -11,7 +11,9 @@ from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
 from .models import CoffeeBeans, PlaceCategory, CartInfo
 from .forms import InsertBeans, InsertPlace, InsertCart, BeanVolume
-
+from django.conf import settings
+import stripe
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 # Create your views here.
 #
@@ -107,9 +109,31 @@ class CartInfoList(generic.TemplateView):
         context = super().get_context_data()
         user = self.request.user
         context['cart_info_list'] = CartInfo.objects.filter(user=user)
+        context['public_key'] = settings.STRIPE_PUBLIC_KEY
         return context
 
 
+# 購入処理
+class BuyingProcessView(generic.TemplateView):
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        cart_info_list = CartInfo.objects.filter(user=user)
+        total_price = 0
+        token = request.POST['stripeToken']
+        # total_price calculation
+        for cart_info in cart_info_list:
+            total_price += cart_info.coffee_beans.price * cart_info.volume
+        try:
+            charge = stripe.Charge.create(
+                amount=total_price,
+                currency='jpy',
+                source=token,
+                description='珈琲豆売上'
+            )
+        except stripe.error.CardError as e:
+            return redirect('market:cartInfo')
+        else:
+            return redirect('market:cartInfo')
 
 # # 豆詳細
 # class BeanDetail(generic.DetailView):

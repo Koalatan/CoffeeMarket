@@ -38,6 +38,24 @@
             </table>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-10">
+            {% if user.is_authenticated %}
+                <form action="{% url 'market:buyingProcess' %}" method="POST">
+                    <script
+                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        data-key="{{ public_key }}"
+                        data-name="クレジット決済"
+                        data-locate="ja"
+                        data-currency="jpy"
+                        data-label="カートで支払う"
+                    >
+                    </script>
+                    {% csrf_token %}
+                </form>
+            {% endif %}
+        </div>
+    </div>
 
 </div>
 </body>
