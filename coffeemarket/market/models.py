@@ -32,6 +32,7 @@ class CoffeeBeans(models.Model):
     # )
 
 
+# now CartInfo
 class CartInfo(models.Model):
     # id
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -42,7 +43,7 @@ class CartInfo(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['user', 'coffee_beans'], name='unique_cart')
         ]
-
+    # ユニーク制約 validation用
     @classmethod
     def check_unique_constrains(cls, user: User, coffee_beans: CoffeeBeans) -> bool:
         return cls.objects.filter(user=user, coffee_beans=coffee_beans).exists()
