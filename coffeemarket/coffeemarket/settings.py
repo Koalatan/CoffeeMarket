@@ -19,6 +19,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
+# secret_key import
+# If you did a git clone, run the 'python generate_secretkey_setting.py > local_setting.py'
 try:
     from .local_settings import *
 except ImportError:
