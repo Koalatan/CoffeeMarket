@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 offset-md-1 ml-3">
+            <h3>購入成功</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-10 offset-md-1"><p class="text-center">決済に成功しました。<br><a href="{% url 'market:top' %}">トップへ戻る</a></p></div>
+    </div>
+</div>
+{% endblock %}

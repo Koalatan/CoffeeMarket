@@ -131,9 +131,19 @@ class BuyingProcessView(generic.TemplateView):
                 description='珈琲豆売上'
             )
         except stripe.error.CardError as e:
-            return redirect('market:cartInfo')
+            return redirect('market:buyingError')
         else:
-            return redirect('market:cartInfo')
+            return redirect('market:buyingSuccess')
+
+
+# 決済エラー
+class BuyingErrorView(generic.TemplateView):
+    template_name = 'buying_error.html'
+
+
+# 決済完了
+class BuyingSuccessView(generic.TemplateView):
+    template_name = 'buying_success.html'
 
 # # 豆詳細
 # class BeanDetail(generic.DetailView):
