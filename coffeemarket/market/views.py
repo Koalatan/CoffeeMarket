@@ -9,7 +9,7 @@ from django.utils.http import urlencode
 from django.views import generic, View
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
-from .models import CoffeeBeans, PlaceCategory, CartInfo
+from .models import CoffeeBeans, PlaceCategory, CartInfo, PurchaseHistory, PaymentMethod
 from .forms import InsertBeans, InsertPlace, InsertCart, BeanVolume
 from django.conf import settings
 import stripe
@@ -133,6 +133,8 @@ class BuyingProcessView(generic.TemplateView):
         except stripe.error.CardError as e:
             return redirect('market:buyingError')
         else:
+            payment_method = get_object_or_404(PaymentMethod, pk=1)
+            PurchaseHistory.objects.create(user_name=user,total_price=total_price,payment_code=payment_method)
             return redirect('market:buyingSuccess')
 
 
