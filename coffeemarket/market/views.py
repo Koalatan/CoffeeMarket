@@ -64,7 +64,7 @@ class PlaceFilterBeanList(generic.ListView):
     def get_queryset(self):
         # aタグのpk取得・絞り込み
         place = self.kwargs['pk']
-        return CoffeeBeans.objects.filter(place_category = place)
+        return CoffeeBeans.objects.filter(place_category=place)
 
 
 # 豆詳細　けん　カート追加処理
@@ -85,16 +85,16 @@ class BeanDetail(TemplateView):
         context = self.get_context_data()
         bean_id = self.kwargs['pk']
         user = self.request.user
-        coffee_beans = get_object_or_404(CoffeeBeans, id=bean_id)
+        # coffee_beans = get_object_or_404(CoffeeBeans, id=bean_id)
         volume = request.POST.get('volume')
 
         # method unique_exists() validate
-        if CartInfo.check_unique_constrains(user, coffee_beans):
+        if CartInfo.check_unique_constrains(user, bean_id):
             context['msg'] = 'すでにカート内に登録されています。'
 
         else:
             context['msg'] = 'カートへの追加完了'
-            cart_info = CartInfo(user=self.request.user, coffee_beans=coffee_beans, volume=volume)
+            cart_info = CartInfo(user=user, coffee_beans_id=bean_id, volume=volume)
             cart_info.save()
 
         return render(request, self.template_name, context)
@@ -133,8 +133,7 @@ class BuyingProcessView(generic.TemplateView):
         except stripe.error.CardError as e:
             return redirect('market:buyingError')
         else:
-            payment_method = get_object_or_404(PaymentMethod, pk=1)
-            PurchaseHistory.objects.create(user_name=user,total_price=total_price,payment_code=payment_method)
+            PurchaseHistory.objects.create(user_name=user, total_price=total_price, payment_code_id=1)
             return redirect('market:buyingSuccess')
 
 

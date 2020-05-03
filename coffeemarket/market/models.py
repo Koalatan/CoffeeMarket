@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
 # PlaceCategory
 from django.db.models import UniqueConstraint
 
@@ -26,6 +25,7 @@ class CoffeeBeans(models.Model):
     beans_description = models.CharField(max_length=500, null=True, blank=True)
     # 外部キー制約
     place_category = models.ForeignKey(PlaceCategory, on_delete=models.CASCADE)
+
     # beans_image = models.ImageField(
     #     upload_to='market/',
     #     verbose_name='珈琲画像',
@@ -43,10 +43,11 @@ class CartInfo(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['user', 'coffee_beans'], name='unique_cart')
         ]
+
     # ユニーク制約 validation用
     @classmethod
-    def check_unique_constrains(cls, user: User, coffee_beans: CoffeeBeans) -> bool:
-        return cls.objects.filter(user=user, coffee_beans=coffee_beans).exists()
+    def check_unique_constrains(cls, user: User, coffee_beans_pk: CoffeeBeans.pk) -> bool:
+        return cls.objects.filter(user=user, coffee_beans_id=coffee_beans_pk).exists()
 
 
 # PaymentStyle
@@ -77,5 +78,3 @@ class PurchaseDetail(models.Model):
     # multi-unique-setting
     class Meta:
         unique_together = ('purchase_code', 'user_name', 'detail_code')
-
-
