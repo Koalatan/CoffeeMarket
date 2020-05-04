@@ -102,8 +102,9 @@ class BeanDetail(TemplateView):
 
 
 # カート内情報閲覧
-class CartInfoList(generic.TemplateView):
+class CartInfoList(LoginRequiredMixin, generic.TemplateView):
     template_name = 'cart_info.html'
+    login_url = '/accounts/login/'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
