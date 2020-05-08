@@ -13,12 +13,6 @@ class PlaceCategory(models.Model):
         return self.place
 
 
-class BeansImage(models.Model):
-    beans_image = models.ImageField(
-        upload_to='market/',
-    )
-
-
 # CoffeeBeansInfo
 class CoffeeBeans(models.Model):
     # id
@@ -30,10 +24,15 @@ class CoffeeBeans(models.Model):
     # 説明文
     beans_description = models.CharField(max_length=500, null=True, blank=True)
     # 外部キー制約
-    place_category = models.ForeignKey(PlaceCategory, on_delete=models.CASCADE)
+    place_category = models.ForeignKey(PlaceCategory,null=True, blank=True, on_delete=models.CASCADE)
     # 画像保存先
-    beans_image = models.ForeignKey(BeansImage, null=True, blank=True, on_delete=models.CASCADE)
 
+
+class BeansImage(models.Model):
+    beans_image = models.ImageField(
+        upload_to='market/', null=True, blank=True,
+    )
+    coffee_beans = models.ForeignKey(CoffeeBeans,  on_delete=models.CASCADE)
 
 
 # now CartInfo
