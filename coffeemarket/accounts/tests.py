@@ -13,4 +13,4 @@ class Test(TestCase):
 
     def test_logout(self):
         res = self.client.get('/accounts/logout/')
-        self.assertEqual(200, res.status_code)
+        self.assertEqual(302, res.status_code)
