@@ -11,6 +11,7 @@
     <form method="POST">
         {% csrf_token %}
         <div class="col-md-8 offset-md-2">
+            <p class="text-right text-danger">{{ msg }}</p>
             <div class="form-group">
                 <label for="id_beans_name">珈琲豆名</label>
                 {{ form.beans_name}}

@@ -27,6 +27,13 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 # PermissionRequiredMixin アクセス制御 permission_required <app_name> <code_name>
 class InsertBeansView(PermissionRequiredMixin, generic.CreateView):
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        message = self.request.GET.get('msg')
+        if message is not None:
+            context['msg'] = '入力された産地は既に追加されています。'
+        return context
+
     model = CoffeeBeans
     form_class = InsertBeans
     permission_required = ('market.can_add',)
@@ -37,14 +44,17 @@ class InsertBeansView(PermissionRequiredMixin, generic.CreateView):
 # 地域登録 テンプレート側のnameをInsertPlaceのfield名と合わせる
 class InsertPlaceView(View):
 
-    def post(self, request):
-        context = {}
-        insert_place = InsertPlace(request.POST)
+    def post(self, *args, **kwargs):
+        redirect_url = reverse('market:insertBeans')
+        insert_place = InsertPlace(self.request.POST)
         # 登録
+
         if insert_place.is_valid():
             insert_place.save()
-
-        return redirect("market:insertBeans")
+        else:
+            query_string = urlencode({'msg': 'error'})
+        redirect_url = '{}?{}'.format(redirect_url, query_string)
+        return redirect(redirect_url)
 
 
 # 珈琲豆一覧
@@ -81,12 +91,12 @@ class BeanDetail(TemplateView):
         context['insert_cart'] = insert_cart
         return context
 
-    def post(self, request, *args, **kwargs):
+    def post(self, *args, **kwargs):
         context = self.get_context_data()
         bean_id = self.kwargs['pk']
         user = self.request.user
         # coffee_beans = get_object_or_404(CoffeeBeans, id=bean_id)
-        volume = request.POST.get('volume')
+        volume = self.request.POST.get('volume')
 
         # method unique_exists() validate
         if CartInfo.check_unique_constrains(user, bean_id):
