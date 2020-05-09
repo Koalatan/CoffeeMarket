@@ -126,11 +126,11 @@ class CartInfoList(LoginRequiredMixin, generic.TemplateView):
 
 # 購入処理
 class BuyingProcessView(generic.TemplateView):
-    def post(self, request, *args, **kwargs):
+    def post(self, *args, **kwargs):
         user = self.request.user
         cart_info_list = CartInfo.objects.filter(user=user)
         total_price = 0
-        token = request.POST['stripeToken']
+        token = self.request.POST['stripeToken']
         # total_price calculation
         for cart_info in cart_info_list:
             total_price += cart_info.coffee_beans.price * cart_info.volume

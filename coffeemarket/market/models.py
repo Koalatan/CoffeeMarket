@@ -24,7 +24,7 @@ class CoffeeBeans(models.Model):
     # 説明文
     beans_description = models.CharField(max_length=500, null=True, blank=True)
     # 外部キー制約
-    place_category = models.ForeignKey(PlaceCategory,null=True, blank=True, on_delete=models.CASCADE)
+    place_category = models.ForeignKey(PlaceCategory, null=True, blank=True, on_delete=models.CASCADE)
     # 画像保存先
 
 
