@@ -144,8 +144,19 @@ class BuyingProcessView(generic.TemplateView):
         except stripe.error.CardError as e:
             return redirect('market:buyingError')
         else:
+            # 購入履歴に保存
             PurchaseHistory.objects.create(user_name=user, total_price=total_price, payment_code_id=1)
             return redirect('market:buyingSuccess')
+
+
+class PurchaseView(LoginRequiredMixin, generic.ListView):
+    context_object_name = 'purchase_historys'
+    template_name = 'purchase_history.html'
+
+    def get_queryset(self):
+        user = self.request.user
+        query_set = PurchaseHistory.objects.filter(user_name=user)
+        return query_set
 
 
 # 決済エラー
