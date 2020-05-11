@@ -17,5 +17,6 @@ urlpatterns = [
     path('user/cart/buying/', views.BuyingProcessView.as_view(), name='buyingProcess'),
     path('user/cart/buying/error/', views.BuyingErrorView.as_view(), name='buyingError'),
     path('user/cart/buying/success/', views.BuyingSuccessView.as_view(), name='buyingSuccess'),
+    path('user/cart/history/', views.PurchaseView.as_view(), name='purchaseHistory'),
     # path('cart/', views.InsertCartView.as_view(), name='insertCart'),
 ]
