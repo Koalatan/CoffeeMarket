@@ -27,7 +27,7 @@
                     {% for purchase_history in purchase_historys %}
                     <tr>
                         <th scope="row">{{ forloop.counter }}</th>
-                        <th scope="row">{{ purchase_history.buy_date }}</th>
+                        <th scope="row"><a href="{% url 'market:purchaseHistoryDetail' purchase_history.pk %}">{{ purchase_history.buy_date }}</th>
                         <td scope="row">{{ purchase_history.total_price }}</td>
                         <td scope="row">{{ purchase_history.payment_code.payment_method}}</td>
                     </tr>
