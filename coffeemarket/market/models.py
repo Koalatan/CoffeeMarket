@@ -73,11 +73,6 @@ class PurchaseHistory(models.Model):
 # CustomerPurchaseDetail !!! Django Compound primary key not supported!!
 class PurchaseDetail(models.Model):
     purchase_code = models.ForeignKey(PurchaseHistory, on_delete=models.CASCADE)
-    user_name = models.ForeignKey(User, on_delete=models.CASCADE)
-    detail_code = models.CharField(max_length=5)
     beans_code = models.ForeignKey(CoffeeBeans, on_delete=models.CASCADE)
     selling_price = models.IntegerField()
 
-    # multi-unique-setting
-    class Meta:
-        unique_together = ('purchase_code', 'user_name', 'detail_code')
