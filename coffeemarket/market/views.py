@@ -9,11 +9,13 @@ from django.utils.http import urlencode
 from django.views import generic, View
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
-from .models import CoffeeBeans, PlaceCategory, CartInfo, PurchaseHistory, PaymentMethod
+from .models import CoffeeBeans, PlaceCategory, CartInfo, PurchaseHistory, PaymentMethod, PurchaseDetail
 from .forms import InsertBeans, InsertPlace, InsertCart, BeanVolume
 from django.conf import settings
 import stripe
+
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
 
 # Create your views here.
 #
@@ -66,7 +68,6 @@ class Top(generic.ListView):
 
 # (産地フィルター）珈琲豆一覧
 class PlaceFilterBeanList(generic.ListView):
-
     model = CoffeeBeans
     context_object_name = 'coffee_beans'
     template_name = 'top.html'
@@ -80,6 +81,7 @@ class PlaceFilterBeanList(generic.ListView):
 # 豆詳細　けん　カート追加処理
 class BeanDetail(TemplateView):
     template_name = 'coffeebean_detail.html'
+
     # initialで
 
     def get_context_data(self, **kwargs):
@@ -156,6 +158,20 @@ class PurchaseView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         user = self.request.user
         query_set = PurchaseHistory.objects.filter(user_name=user)
+        return query_set
+
+
+class PurchaseHistoryDetailView(LoginRequiredMixin, generic.ListView):
+    context_object_name = 'purchase_details'
+    template_name = 'purchase_detail.html'
+
+    def get_queryset(self):
+        user = self.request.user
+        purchase_id = self.kwargs['pk']
+        query_set = PurchaseDetail.objects.filter(purchase_code_id=purchase_id, purchase_code__user_name=user)
+        # select_related('beans_code', 'purchase_code', 'purchase_code__user_name').\
+        # get(purchase_code=purchase_id, id=user.pk)
+
         return query_set
 
 

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load market_tags %}
+<body>
+<div class="container">
+    <div class="row pt-5">
+        <div class="col-md-12">
+            <h3 class="float-left text text-secondary">購入詳細</h3>
+            <div class="float-right text text-primary">{{ msg }}</div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-10 offset-md-1">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">豆名</th>
+                        <th scope="col"></th>
+                        <th scope="col">決済方法</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for purchase_detail in purchase_details %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <th scope="row">{{ purchase_detail.beans_code.beans_name }}</th>
+                        <td scope="row"></td>
+                        <td scope="row"></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+{% endblock %}
+</html>
