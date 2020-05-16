@@ -75,4 +75,5 @@ class PurchaseDetail(models.Model):
     purchase_code = models.ForeignKey(PurchaseHistory, on_delete=models.CASCADE)
     beans_code = models.ForeignKey(CoffeeBeans, on_delete=models.CASCADE)
     selling_price = models.IntegerField()
+    volume = models.IntegerField()
 
