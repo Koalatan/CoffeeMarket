@@ -1,3 +1,5 @@
+from django.utils import timezone
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
@@ -127,7 +129,16 @@ class CartInfoList(LoginRequiredMixin, generic.TemplateView):
 
 
 # 購入処理
+def savePurchaseDetail(purchase_history_pk, cart_info_list):
+    for cart_info in cart_info_list:
+        PurchaseDetail.objects.create(
+            purchase_code_id=purchase_history_pk, beans_code_id=cart_info.coffee_beans.pk,
+            selling_price=cart_info.coffee_beans.price, volume=cart_info.volume
+        )
+
+
 class BuyingProcessView(generic.TemplateView):
+
     def post(self, *args, **kwargs):
         user = self.request.user
         cart_info_list = CartInfo.objects.filter(user=user)
@@ -147,7 +158,18 @@ class BuyingProcessView(generic.TemplateView):
             return redirect('market:buyingError')
         else:
             # 購入履歴に保存
-            PurchaseHistory.objects.create(user_name=user, total_price=total_price, payment_code_id=1)
+            buy_date = timezone.now()
+            PurchaseHistory.objects.create(
+                user_name=user, total_price=total_price, payment_code_id=1, buy_date=buy_date
+            )
+            purchase_history_pk = \
+                PurchaseHistory.objects.filter(user_name=user, buy_date=buy_date).values_list('id', flat=True)
+
+            if len(purchase_history_pk) != 1:
+                print(purchase_history_pk)
+                print("err!")
+            else:
+                savePurchaseDetail(purchase_history_pk[0], cart_info_list)
             return redirect('market:buyingSuccess')
 
 
@@ -168,7 +190,9 @@ class PurchaseHistoryDetailView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         user = self.request.user
         purchase_id = self.kwargs['pk']
-        query_set = PurchaseDetail.objects.filter(purchase_code_id=purchase_id, purchase_code__user_name=user)
+        query_set = PurchaseDetail.objects.filter(
+            purchase_code_id=purchase_id, purchase_code__user_name=user
+        )
         # select_related('beans_code', 'purchase_code', 'purchase_code__user_name').\
         # get(purchase_code=purchase_id, id=user.pk)
 
