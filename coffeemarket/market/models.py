@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 # PlaceCategory
 from django.db.models import UniqueConstraint
+from django.utils import timezone
 
 
 class PlaceCategory(models.Model):
@@ -64,7 +65,7 @@ class PurchaseHistory(models.Model):
     user_name = models.ForeignKey(User, on_delete=models.CASCADE)
     total_price = models.IntegerField(null=True, blank=True)
     payment_code = models.ForeignKey(PaymentMethod, on_delete=models.CASCADE)
-    buy_date = models.DateTimeField(auto_now_add=True)
+    buy_date = models.DateTimeField(default=timezone.now)
 
     class Meta:
         unique_together = ('id', 'user_name')
