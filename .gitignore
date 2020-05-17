@@ -7,3 +7,4 @@ db.sqlite3
 media
 coffeemarket/static/
 coffeemarket/deploy_static/
+coffeemarket/market/migrations
