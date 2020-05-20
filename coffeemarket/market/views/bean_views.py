@@ -7,6 +7,7 @@ from django.views import generic, View
 from ..forms import InsertBeans, InsertPlace
 from ..models import CoffeeBeans, PlaceCategory, CartInfo, PurchaseHistory, PaymentMethod, PurchaseDetail
 
+
 # 珈琲豆追加view
 # PermissionRequiredMixin アクセス制御 permission_required <app_name> <code_name>
 class InsertBeansView(PermissionRequiredMixin, generic.CreateView):

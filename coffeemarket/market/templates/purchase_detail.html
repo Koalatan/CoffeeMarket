@@ -14,13 +14,16 @@
 <div class="container">
     <div class="row mt-4">
         <div class="col-md-10 offset-md-1">
+            <div class="">
+                <p>決済方法：{{ purchase_details.0.purchase_code.payment_code.payment_method }}</p>
+            </div>
             <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">豆名</th>
-                        <th scope="col"></th>
-                        <th scope="col">決済方法</th>
+                        <th scope="col">購入数量</th>
+                        <th scope="col">単価</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,8 +31,8 @@
                     <tr>
                         <th scope="row">{{ forloop.counter }}</th>
                         <th scope="row">{{ purchase_detail.beans_code.beans_name }}</th>
-                        <td scope="row"></td>
-                        <td scope="row"></td>
+                        <td scope="row">{{ purchase_detail.volume }}</td>
+                        <td scope="row">{{ purchase_detail.selling_price }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
