@@ -1,4 +1,5 @@
 import stripe
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.utils import timezone
@@ -36,10 +37,15 @@ class BuyingProcessView(generic.TemplateView):
                 amount=total_price,
                 currency='jpy',
                 source=token,
-                description='珈琲豆売上'
+                description='珈琲豆売上',
+                api_key=settings.STRIPE_SECRET_KEY
             )
         except stripe.error.CardError as e:
             return redirect('market:buyingError')
+        except Exception as e:
+            # 重大なエラー (APIの仕様変更等,　エラーの範囲が広すぎるかも。
+            return redirect('market:buyingError')
+
         else:
             # 購入履歴に保存
             buy_date = timezone.now()
@@ -81,7 +87,6 @@ class PurchaseHistoryDetailView(LoginRequiredMixin, generic.ListView):
         # get(purchase_code=purchase_id, id=user.pk)
 
         return query_set
-
 
 
 # 決済エラー
