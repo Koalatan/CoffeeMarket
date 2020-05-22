@@ -2,7 +2,7 @@ from django.conf.urls import handler404
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import request
 from django.urls import path
-from .views import bean_views, cart_views, payment_views
+from .views import bean_views, cart_views, payment_views, user_views
 
 app_name = 'market'
 
@@ -19,5 +19,6 @@ urlpatterns = [
     path('user/cart/buying/success/', payment_views.BuyingSuccessView.as_view(), name='buyingSuccess'),
     path('user/cart/history/', payment_views.PurchaseView.as_view(), name='purchaseHistory'),
     path('user/cart/history/<int:pk>', payment_views.PurchaseHistoryDetailView.as_view(), name='purchaseHistoryDetail'),
+    path('user/info/', user_views.UserInfoView.as_view(), name='userInfo'),
     # path('cart/', views.InsertCartView.as_view(), name='insertCart'),
 ]
