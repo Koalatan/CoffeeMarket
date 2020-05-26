@@ -52,6 +52,6 @@ class CartInfoList(LoginRequiredMixin, generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         user = self.request.user
-        context['cart_info_list'] = CartInfo.objects.filter(user=user)
+        context['cart_info_list'] = CartInfo.objects.select_related('coffee_beans').filter(user=user)
         context['public_key'] = settings.STRIPE_PUBLIC_KEY
         return context

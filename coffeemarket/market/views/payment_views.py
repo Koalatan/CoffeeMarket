@@ -80,13 +80,21 @@ class PurchaseHistoryDetailView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         user = self.request.user
         purchase_id = self.kwargs['pk']
-        query_set = PurchaseDetail.objects.filter(
-            purchase_code_id=purchase_id, purchase_code__user_name=user
-        )
-        # select_related('beans_code', 'purchase_code', 'purchase_code__user_name').\
-        # get(purchase_code=purchase_id, id=user.pk)
-
+        query_set = \
+            PurchaseDetail.objects.select_related(
+                'beans_code', 'purchase_code'
+            ).filter(
+                purchase_code_id=purchase_id, purchase_code__user_name=user
+            )
         return query_set
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        purchase_id = self.kwargs['pk']
+        context['payment_name'] = PurchaseHistory.objects.values_list(
+            'payment_code__payment_method', flat=True).get(id=purchase_id)
+
+        return context
 
 
 # 決済エラー
