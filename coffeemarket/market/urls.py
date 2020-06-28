@@ -19,6 +19,6 @@ urlpatterns = [
     path('user/cart/buying/success/', payment_views.BuyingSuccessView.as_view(), name='buyingSuccess'),
     path('user/cart/history/', payment_views.PurchaseView.as_view(), name='purchaseHistory'),
     path('user/cart/history/<int:pk>', payment_views.PurchaseHistoryDetailView.as_view(), name='purchaseHistoryDetail'),
-    path('user/info/', user_views.UserInfoView.as_view(), name='userInfo'),
+    path('user/', user_views.UserInfoView.as_view(), name='user'),
     # path('cart/', views.InsertCartView.as_view(), name='insertCart'),
 ]
