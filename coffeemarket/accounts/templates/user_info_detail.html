@@ -16,24 +16,29 @@
 <div class="container">
     <div class="row pt-4">
         <div class="col-md-8 offset-md-2">
-            <table class="table table-bordered mt-5">
+            <form method="post">
+                <table class="table table-active mt-5">
+                {% csrf_token %}
                 <tbody>
                     <tr>
-                        <th>住所</th>
-                        <td>{{ view.userInfo.address }}</td>
+                        <th>{{ form.address.label}}</th>
+                        <td>{{ form.address }}</td>
                     </tr>
                     <tr>
-                        <th>郵便番号</th>
-                        <td>{{ view.userInfo.zip_code}}</td>
+                        <th>{{ form.zip_code.label}}</th>
+                        <td>{{ form.zip_code }}</td>
                     </tr>
                     <tr>
-                        <th>電話番号</th>
-                        <td>{{ view.userInfo.tel}}</td>
+                        <th>{{ form.tel.label }}</th>
+                        <td>{{ form.tel }}</td>
                     </tr>
                 </tbody>
-            </table>
+                </table>
+                <div class="text-center">
+                <input class=" col-md-4 btn btn-outline-success" type="submit" value="送信">
+                </div>
+            </form>
         </div>
     </div>
 </div>
-</body>
 {% endblock %}
