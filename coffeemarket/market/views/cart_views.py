@@ -1,7 +1,6 @@
 # 豆詳細　けん　カート追加処理
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import request
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
 from django.views.generic import TemplateView
@@ -40,7 +39,7 @@ class BeanDetail(TemplateView):
             cart_info = CartInfo(user=user, coffee_beans_id=bean_id, volume=volume)
             cart_info.save()
 
-        return render(request, self.template_name, context)
+        return render(self.request, self.template_name, context)
         # CartInfo.objects.create(user=self.request.user, coffee_beans=coffee_beans, volume=volume)
 
 
