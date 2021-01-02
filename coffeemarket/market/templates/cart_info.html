@@ -28,7 +28,7 @@
                 {% for cart_info in cart_info_list %}
                     <tr>
                         <th>{{ forloop.counter }}</th>
-                        <td>{{ cart_info.coffee_beans.beans_name }}</td>
+                        <td><a href="{% url 'market:beanDetail' cart_info.coffee_beans.pk %}" />{{ cart_info.coffee_beans.beans_name }}</td>
                         <td>{{ cart_info.volume }}</td>
                         <td>{{ cart_info.coffee_beans.price }}円</td>
                         <td>{{ cart_info.coffee_beans.price | sum_price:cart_info.volume }}円</td>
